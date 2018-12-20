@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class PassportController extends Controller
 {
@@ -17,6 +19,12 @@ class PassportController extends Controller
         return view('index',compact('passports'))
         ->with('i', (request()->input('page', 1) - 1) * 8);
     }
+    // public function index()
+    // {
+    //     $passports=\App\Passport::latest()->paginate(8);
+    //     return view('index',compact('passports'))
+    //     ->with('i', (request()->input('page', 1) - 1) * 8);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -78,6 +86,15 @@ class PassportController extends Controller
         return view('edit',compact('passport','id'));
     }
 
+
+    public static function UnlinkImage($filepath,$fileName)
+    {
+        $old_image = $filepath.$fileName;
+        if (file_exists($old_image)) {
+            @unlink($old_image);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -90,12 +107,44 @@ class PassportController extends Controller
 
 
         $passport= \App\Passport::find($id);
+
+        // suppresion image
+        $imageSupp = $passport->filename;
+
+        //dd(public_path());
+
+        $contents = Storage::get($imageSupp);
+
+        Storage::delete($contents);
+
+
+
+
+        // $image_path = "/images/$imageSupp";  // Value is not URL but directory file path
+/*        $filepath = "/images/";
+        $fileName = $imageSupp;
+        self::UnlinkImage($filepath, $fileName);*/
+
         $passport->marque=$request->get('marque');
         $passport->cylindree=$request->get('cylindree');
         $passport->modele=$request->get('modele');
         $passport->annee=$request->get('annee');
         $passport->categorie=$request->get('categorie');
-        $passport->filename=$request->get('filename');
+
+        //$passport->filename=$request->get('filename');
+
+        //$passport->filename=$name;
+
+        if($request->hasfile('filename'))
+        {
+            $file = $request->file('filename');
+            $name=time().$file->getClientOriginalName();
+            $file->move(public_path().'/images/', $name);
+        }
+
+        $passport->filename=$name;
+
+
         $passport->save();
         return redirect('passports');
     }
@@ -112,4 +161,5 @@ class PassportController extends Controller
         $passport->delete();
         return redirect('passports')->with('success','Information has been  deleted');
     }
+
 }

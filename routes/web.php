@@ -21,7 +21,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/marque','TrierController@triermarque');
 
+Route::get('/annee','TrierController@trierannee');
 
+Route::get('/categorie','TrierController@triercategorie');
 
+Route::get('/cylindree','TrierController@triercylindree');
+
+Route::get('/listemarque', 'TrierController@trierlistemarque');
+
+Route::get('logo-moto', 'LogoMotoController@index');
+Route::post('logo-moto', 'LogoMotoController@upload');
+Route::delete('logo-moto/{id}', 'LogoMotoController@destroy');
 

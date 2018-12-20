@@ -52,6 +52,11 @@
                   <option value="Trail">trail</option>
                   <option value="Enduro">Enduro</option>
                   <option value="Cross">Cross</option>
+                  <option value="Trial">Trial</option>
+                  <option value="Supermotard">Supermotard</option>
+                  <option value="Scooter">Scooter</option>
+                  <option value="Mobylette">Mobylette</option>
+                  <option value="Quad">Quad</option>
                 </select>
             </div>
         </div>

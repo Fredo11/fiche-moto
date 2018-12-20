@@ -8,7 +8,7 @@
   <body>
     <div class="container">
       <h2>Modifier une fiche</h2><br  />
-        <form method="post" action="{{action('PassportController@update', $id)}}">
+        <form method="post" action="{{action('PassportController@update', $id)}}" enctype="multipart/form-data">
         @csrf
         <input name="_method" type="hidden" value="PATCH">
         <div class="row">
@@ -36,7 +36,7 @@
           <div class="col-md-4"></div>
             <div class="form-group col-md-4">
               <label for="annee">Année</label>
-              <input type="integer" class="form-control" name="annee" value="{{$passport->cylindree}}">
+              <input type="integer" class="form-control" name="annee" value="{{$passport->annee}}">
             </div>
           </div>
         <div class="row">
@@ -48,6 +48,11 @@
                   <option value="Trail"  @if($passport->categorie=="Trail") selected @endif>Trail</option>
                   <option value="Enduro" @if($passport->categorie=="Enduro") selected @endif>Enduro</option>
                   <option value="Cross" @if($passport->categorie=="Cross") selected @endif>Cross</option>
+                  <option value="Routiere"  @if($passport->categorie=="Trial") selected @endif>Trial</option>
+                  <option value="Trail"  @if($passport->categorie=="Supermotard") selected @endif>Supermotard</option>
+                  <option value="Enduro" @if($passport->categorie=="Scooter") selected @endif>Scooter</option>
+                  <option value="Cross" @if($passport->categorie=="Mobylette") selected @endif>Mobylette</option>
+                  <option value="Cross" @if($passport->categorie=="Quad") selected @endif>Quad</option>
                 </select>
             </div>
         </div>
